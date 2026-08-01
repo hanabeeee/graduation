@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>握りやすさ指標 自動計測システム</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+    <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">握りやすさ指標 自動計測システム</h1>
+        <p class="text-center text-gray-500 mb-8">手の画像をアップロードすると、AIが自動で「接触面積」「手幅」「コの字の間隔」を解析します。</p>
+
+        <form id="uploadForm" class="flex flex-col items-center gap-4 border-2 border-dashed border-gray-300 p-8 rounded-lg bg-gray-50">
+            <input type="file" id="imageInput" accept="image/*" class="block w-full max-w-sm text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+            <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition">
+                画像を解析する
+            </button>
+        </form>
+
+        <div id="loading" class="hidden text-center mt-6">
+            <p class="text-blue-600 font-bold animate-pulse">サーバーで画像を解析中です... しばらくお待ちください。</p>
+        </div>
+
+        <div id="resultArea" class="hidden mt-10">
+            <h2 class="text-2xl font-bold text-center border-b-2 border-gray-200 pb-2 mb-6">解析結果</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="flex justify-center bg-gray-100 p-4 rounded-lg">
+                    <img id="resultImage" src="" alt="解析結果画像" class="max-w-full h-auto rounded-lg shadow">
+                </div>
+
+                <div class="flex flex-col justify-center gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 shadow-sm">
+                        <p class="text-sm text-gray-500 font-bold">指標 A</p>
+                        <p class="text-2xl font-extrabold text-blue-700">中指の長さ: <span id="valA">--</span> cm</p>
+                    </div>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500 shadow-sm">
+                        <p class="text-sm text-gray-500 font-bold">指標 B</p>
+                        <p class="text-2xl font-extrabold text-green-700">手のひらの長さ: <span id="valB">--</span> cm</p>
+                    </div>
+
+                    <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500 shadow-sm">
+                        <p class="text-sm text-gray-500 font-bold">指標 C</p>
+                        <p class="text-2xl font-extrabold text-yellow-700">手の横幅: <span id="valC">--</span> cm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const loading = document.getElementById('loading');
+        const resultArea = document.getElementById('resultArea');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // 画面の遷移を防ぐ
+
+            const fileInput = document.getElementById('imageInput');
+            if (fileInput.files.length === 0) {
+                alert('画像を選択してください！');
+                return;
+            }
+
+            // 1. 送るデータを準備する
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            // 2. 画面の表示を切り替える（ロード中表示）
+            loading.classList.remove('hidden');
+            resultArea.classList.add('hidden');
+
+            try {
+                // 3. Flaskサーバーに画像をPOST送信！
+                const response = await fetch('http://127.0.0.1:5001/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                // サーバーからエラーが返ってきた場合
+                if (!response.ok || data.error) {
+                    alert('解析エラー: ' + (data.error || '不明なエラー'));
+                    loading.classList.add('hidden');
+                    return;
+                }
+
+                // 4. 解析成功！画面に数値を入れ込む
+                document.getElementById('valA').innerText = data.A_area_cm2;
+                document.getElementById('valB').innerText = data.B_width_cm;
+                document.getElementById('valC').innerText = data.C_grip_cm;
+                document.getElementById('resultImage').src = data.processed_image_base64;
+
+                // 5. 結果エリアを表示する
+                loading.classList.add('hidden');
+                resultArea.classList.remove('hidden');
+
+            } catch (error) {
+                console.error(error);
+                alert('通信に失敗しました。Flaskサーバーが起動しているか確認してください。');
+                loading.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

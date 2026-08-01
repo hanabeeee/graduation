@@ -1,0 +1,12 @@
+# これまでの設定
+*.json
+__pycache__/
+.DS_Store
+
+# 今回追加する設定（画像・データ・動画）
+*.png
+*.csv
+*.mp4
+*.jpg
+*.Mov
+*.pdf
