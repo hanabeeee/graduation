@@ -11,14 +11,7 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#f0f7ff',
-              100: '#e0effe',
-              500: '#0284c7',
-              600: '#0369a1',
-              700: '#075985',
-              900: '#0c4a6e',
-            },
+            brand: { 50: '#f0f7ff', 100: '#e0effe', 500: '#0284c7', 600: '#0369a1', 700: '#075985', 900: '#0c4a6e' },
             nature: '#16a34a',
             forestry: '#d97706',
             hospital: '#0d9488',
@@ -29,20 +22,10 @@
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
-    body {
-      font-family: 'Inter', 'Noto Sans JP', sans-serif;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
-    }
+    body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
   </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
@@ -52,494 +35,462 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
       <div class="flex items-center space-x-3">
         <div class="bg-brand-500 p-2.5 rounded-lg shadow-inner">
-          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-          </svg>
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
         </div>
         <div>
           <h1 class="text-xl font-bold tracking-wider">北広島モデル</h1>
           <p class="text-xs text-brand-100 opacity-90">共同データ管理・サーバー同期システム</p>
         </div>
       </div>
-
       <div class="flex items-center space-x-4">
         <div class="bg-white/10 backdrop-blur px-3 py-1.5 rounded-full text-xs flex items-center space-x-2">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
+          <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
           <span class="text-brand-50">中央サーバー: 稼働中 (Active)</span>
         </div>
-        
         <div class="text-sm font-medium border-l border-white/20 pl-4 flex items-center space-x-2">
           <span class="text-slate-300">ログイン中:</span>
-          <span id="current-user-badge" class="bg-white text-slate-900 px-2.5 py-1 rounded text-xs font-semibold shadow-sm transition-colors duration-300">
-            北広島病院 担当者
-          </span>
+          <span id="current-user-badge" class="bg-teal-100 text-hospital px-2.5 py-1 rounded text-xs font-semibold shadow-sm transition-colors duration-300">北広島病院 担当者</span>
         </div>
-
-        <button onclick="resetSystem()" class="text-xs text-slate-300 hover:text-white underline transition">
-          リセット
-        </button>
+        <button onclick="resetSystem()" class="text-xs text-slate-300 hover:text-white underline transition">リセット</button>
       </div>
     </div>
   </header>
 
   <!-- ==================== MAIN CONTENT ==================== -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
-    
-    <!-- 拠点切り替えタブ -->
-    <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-200 flex flex-wrap gap-2">
-      <span class="text-xs font-bold text-slate-400 uppercase tracking-wider w-full px-2 mb-1 block">💡 デモ用：ログイン拠点の切り替え</span>
-      
-      <button onclick="switchHub('nature')" id="btn-tab-nature" class="flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 text-slate-600 hover:bg-slate-100">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-        <span>広島自然学校</span>
-      </button>
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
 
-      <button onclick="switchHub('forestry')" id="btn-tab-forestry" class="flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 text-slate-600 hover:bg-slate-100">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-        <span>大内林業</span>
+    <!-- 🌐 大枠のモード切り替えタブ -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-1 flex max-w-3xl mx-auto w-full">
+      <button id="tab-global-entry" onclick="switchGlobalMode('entry')" class="flex-1 py-3 text-sm font-bold bg-brand-50 text-brand-700 rounded-lg transition-all flex justify-center items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg> データ入力・登録
       </button>
-
-      <button onclick="switchHub('hospital')" id="btn-tab-hospital" class="flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-200 shadow-sm bg-hospital text-white">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-        <span>北広島病院</span>
+      <button id="tab-global-view" onclick="switchGlobalMode('view')" class="flex-1 py-3 text-sm font-medium text-slate-500 hover:text-brand-700 hover:bg-slate-50 rounded-lg transition-all flex justify-center items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg> データ照会・数値を見る
       </button>
     </div>
 
-    <!-- 通知トースト -->
     <div id="toast" class="hidden fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-5 py-3 rounded-lg shadow-xl flex items-center space-x-2 border border-slate-700 transition-all duration-300">
-      <span id="toast-icon">🟢</span>
-      <span id="toast-text" class="text-sm font-medium">データが送信されました</span>
+      <span id="toast-icon">🟢</span><span id="toast-text" class="text-sm font-medium">データが送信されました</span>
     </div>
 
-    <!-- ==================== FORM PANELS ==================== -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+    <!-- ========================================== -->
+    <!-- 🟢 モード1: データ入力・登録画面 -->
+    <!-- ========================================== -->
+    <div id="mode-entry" class="space-y-6 block">
       
-      <!-- 入力エリア (左側：2カラム分) -->
-      <div class="lg:col-span-2 space-y-6">
-
-        <!-- パターンA: 広島自然学校フォーム -->
-        <section id="panel-nature" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 hidden">
-          <div class="bg-gradient-to-r from-nature to-emerald-500 text-white px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl">🛠️</span>
-              <div>
-                <h2 class="font-bold text-lg">補助具 制作進捗の登録・更新</h2>
-                <p class="text-xs text-emerald-100 opacity-90">広島自然学校専用入力フォーム</p>
-              </div>
-            </div>
-            <span class="bg-white/20 text-white text-xs px-2.5 py-1 rounded font-semibold tracking-wider">自然学校</span>
-          </div>
-
-          <form id="form-nature" onsubmit="handleFormSubmit(event, 'nature')" class="p-6 space-y-5">
-            <!-- 【変更点】対象患者IDと補助具名を並べる -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1.5">1. 対象患者ID <span class="text-red-500">*</span></label>
-                <input type="text" required id="nature-patient-id" placeholder="例: PT-2026-004" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-nature focus:border-transparent transition-all">
-                <p class="text-[10px] text-slate-400 mt-1">※病院から共有されたIDを入力</p>
-              </div>
-
-              <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1.5">2. 補助具名 <span class="text-red-500">*</span></label>
-                <input type="text" required id="nature-name" placeholder="例: 歩行サポート用ギプスA" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-nature focus:border-transparent transition-all">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-2">3. 現在の進捗ステータス <span class="text-red-500">*</span></label>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <label class="flex items-center justify-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:bg-emerald-50/50 transition duration-150">
-                  <input type="radio" name="nature-status" value="設計中" class="sr-only peer" checked>
-                  <span class="text-xs font-semibold text-slate-500 peer-checked:text-nature-600">1. 設計中</span>
-                </label>
-                <label class="flex items-center justify-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:bg-emerald-50/50 transition duration-150">
-                  <input type="radio" name="nature-status" value="試作中" class="sr-only peer">
-                  <span class="text-xs font-semibold text-slate-500 peer-checked:text-nature-600">2. 試作中</span>
-                </label>
-                <label class="flex items-center justify-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:bg-emerald-50/50 transition duration-150">
-                  <input type="radio" name="nature-status" value="モニタリング中" class="sr-only peer">
-                  <span class="text-xs font-semibold text-slate-500 peer-checked:text-nature-600">3. モニタリング</span>
-                </label>
-                <label class="flex items-center justify-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:bg-emerald-50/50 transition duration-150">
-                  <input type="radio" name="nature-status" value="完成" class="sr-only peer">
-                  <span class="text-xs font-semibold text-slate-500 peer-checked:text-nature-600">4. 完成</span>
-                </label>
-              </div>
-              <script>
-                document.querySelectorAll('input[name="nature-status"]').forEach(radio => {
-                  const label = radio.parentElement;
-                  if (radio.checked) {
-                    label.classList.add('border-nature', 'bg-emerald-50', 'ring-2', 'ring-emerald-500/20');
-                    label.querySelector('span').classList.add('text-emerald-700');
-                  }
-                  radio.addEventListener('change', () => {
-                    document.querySelectorAll('input[name="nature-status"]').forEach(r => {
-                      const l = r.parentElement;
-                      l.classList.remove('border-nature', 'bg-emerald-50', 'ring-2', 'ring-emerald-500/20');
-                      l.querySelector('span').classList.remove('text-emerald-700');
-                    });
-                    if (radio.checked) {
-                      label.classList.add('border-nature', 'bg-emerald-50', 'ring-2', 'ring-emerald-500/20');
-                      label.querySelector('span').classList.add('text-emerald-700');
-                    }
-                  });
-                });
-              </script>
-            </div>
-
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-1.5">4. 進捗詳細・現場からのメモ</label>
-              <textarea id="nature-desc" rows="3" placeholder="病院から共有された寸法やニーズをもとにした設計・試作状況などを記述してください。" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-nature focus:border-transparent transition-all"></textarea>
-            </div>
-
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-1.5">5. 試作品の写真・図面データ</label>
-              <div class="relative border-2 border-dashed border-slate-300 hover:border-nature rounded-xl p-6 bg-slate-50/50 transition duration-150 group text-center cursor-pointer" onclick="document.getElementById('file-nature').click()">
-                <input type="file" id="file-nature" class="hidden" onchange="updateFileName('nature')">
-                <div class="space-y-2">
-                  <svg class="mx-auto h-10 w-10 text-slate-400 group-hover:text-nature transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <p class="text-sm text-slate-600 font-medium">ここに画像・ドキュメントをドロップ、またはファイルを選択</p>
-                  <p id="file-name-nature" class="text-xs text-nature font-semibold mt-1 hidden"></p>
-                </div>
-              </div>
-            </div>
-
-            <div class="pt-2 flex justify-end">
-              <button type="submit" class="w-full sm:w-auto bg-nature hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition duration-200">
-                進捗データを同期送信する
-              </button>
-            </div>
-          </form>
-        </section>
-
-        <!-- パターンB: 大内林業フォーム -->
-        <section id="panel-forestry" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 hidden">
-          <div class="bg-gradient-to-r from-forestry to-amber-500 text-white px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl">🪵</span>
-              <div>
-                <h2 class="font-bold text-lg">木材在庫・出荷可能数の報告</h2>
-                <p class="text-xs text-amber-100 opacity-90">大内林業専用入力フォーム</p>
-              </div>
-            </div>
-            <span class="bg-white/20 text-white text-xs px-2.5 py-1 rounded font-semibold tracking-wider">大内林業</span>
-          </div>
-
-          <form id="form-forestry" onsubmit="handleFormSubmit(event, 'forestry')" class="p-6 space-y-5">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1.5">1. 木材の種類 <span class="text-red-500">*</span></label>
-                <select id="wood-type" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-forestry transition-all">
-                  <option value="スギ（杉）">スギ（杉）</option>
-                  <option value="ヒノキ（檜）">ヒノキ（檜）</option>
-                  <option value="カラマツ（唐松）">カラマツ（唐松）</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1.5">2. 備考</label>
-                <input type="text" id="wood-note" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
-                <label class="block text-xs font-bold text-amber-800 uppercase tracking-wide mb-1.5">保存数 <span class="text-red-500">*</span></label>
-                <div class="flex items-center space-x-2">
-                  <input type="number" required id="wood-inventory" min="0" placeholder="0" class="w-full px-3.5 py-2 bg-white border border-slate-300 rounded-lg font-bold text-slate-800 focus:ring-2 focus:ring-forestry transition-all">
-                  <span class="text-slate-600 font-semibold">本</span>
-                </div>
-              </div>
-              <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
-                <label class="block text-xs font-bold text-emerald-800 uppercase tracking-wide mb-1.5">即時出荷可能 <span class="text-red-500">*</span></label>
-                <div class="flex items-center space-x-2">
-                  <input type="number" required id="wood-shippable" min="0" placeholder="0" class="w-full px-3.5 py-2 bg-white border border-slate-300 rounded-lg font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 transition-all">
-                  <span class="text-slate-600 font-semibold">本</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="pt-2 flex justify-end">
-              <button type="submit" class="w-full sm:w-auto bg-forestry hover:bg-amber-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition duration-200">
-                在庫データを同期送信する
-              </button>
-            </div>
-          </form>
-        </section>
-
-        <!-- パターンC: 北広島病院フォーム (ニーズ登録 & AI統合) -->
-        <section id="panel-hospital" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 block">
-          
-          <div class="bg-gradient-to-r from-hospital to-teal-500 text-white px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-              <span class="text-2xl">🏥</span>
-              <div>
-                <h2 class="font-bold text-lg">データ管理・AI解析ポータル</h2>
-                <p class="text-xs text-teal-100 opacity-90">北広島病院・在宅ナース専用</p>
-              </div>
-            </div>
-            <span class="bg-white/20 text-white text-xs px-2.5 py-1 rounded font-semibold tracking-wider">北広島病院</span>
-          </div>
-
-          <!-- 病院内サブタブ (ニーズ登録 / AI画像解析) -->
-          <div class="flex border-b border-slate-200 bg-slate-50">
-            <button type="button" onclick="switchHospitalTab('needs')" id="btn-hosp-needs" class="flex-1 py-3 text-sm font-bold text-hospital border-b-2 border-hospital bg-teal-50/50 transition">
-              📋 補助具ニーズの登録
-            </button>
-            <button type="button" onclick="switchHospitalTab('ai')" id="btn-hosp-ai" class="flex-1 py-3 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-hospital hover:bg-slate-100 transition flex items-center justify-center gap-1.5">
-              🤖 AI画像寸法解析 <span class="text-[10px] bg-slate-200 text-slate-600 px-1.5 rounded-sm">工大連携</span>
-            </button>
-          </div>
-
-          <!-- 病院 サブビュー1: ニーズ登録 -->
-          <div id="hospital-view-needs" class="block">
-            <form id="form-hospital" onsubmit="handleFormSubmit(event, 'hospital')" class="p-6 space-y-5">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">1. 患者管理ID <span class="text-red-500">*</span></label>
-                  <input type="text" required id="patient-id" placeholder="例: PT-2026-004" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-hospital focus:border-transparent transition-all">
-                </div>
-
-                <div>
-                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">2. 必要とされる補助具 <span class="text-red-500">*</span></label>
-                  <input type="text" required id="req-tool" placeholder="例: 食事用スプーンの持ち手補助具" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-hospital focus:border-transparent transition-all">
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1.5">3. 患者様の特徴・具体的な症状 <span class="text-red-500">*</span></label>
-                <textarea id="patient-symptom" required rows="3" placeholder="「右手首に軽度のマヒがあり、通常のスプーンを握り続けるのが困難」など" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:ring-2 focus:ring-hospital transition-all"></textarea>
-              </div>
-
-              <div class="pt-2 flex justify-end">
-                <button type="submit" class="w-full sm:w-auto bg-hospital hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition duration-200">
-                  ニーズを登録・サーバー送信
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <!-- 病院 サブビュー2: AI画像解析 -->
-          <div id="hospital-view-ai" class="hidden p-6 space-y-6">
-            <div class="text-center mb-4">
-                <h3 class="text-lg font-bold text-slate-800">握りやすさ指標 自動計測システム</h3>
-                <p class="text-sm text-slate-500 mt-1">
-                    広島工業大学のAIモデルを利用して、患者様の手の画像から<br>
-                    「接触面積」「手幅」「コの字の間隔」等の補助具制作に必要な寸法を自動解析します。
-                </p>
-            </div>
-
-            <form id="ai-upload-form" class="flex flex-col items-center gap-4 border-2 border-dashed border-slate-300 hover:border-hospital transition duration-150 p-8 rounded-xl bg-slate-50 w-full">
-                
-                <!-- 【追加】患者ID入力欄 -->
-                <div class="w-full max-w-sm mb-2">
-                    <label class="block text-sm font-bold text-slate-700 mb-1.5 text-left flex items-center gap-1">
-                        <svg class="w-4 h-4 text-hospital" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
-                        対象患者の管理ID <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" required id="ai-patient-id" placeholder="例: PT-2026-004" class="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-hospital transition-all shadow-sm">
-                    <p class="text-[10px] text-slate-400 mt-1 text-left">※解析結果はこのIDに紐づいてデータベースに保存されます。</p>
-                </div>
-
-                <div class="w-full border-t border-slate-200 my-2"></div>
-
-                <input type="file" id="imageInput" accept="image/*" class="block w-full max-w-sm text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-hospital hover:file:bg-teal-100 cursor-pointer">
-                
-                <button type="submit" class="mt-2 px-8 py-3 bg-hospital text-white font-bold rounded-full hover:bg-teal-700 transition shadow-md">
-                    画像をAIで解析する
-                </button>
-            </form>
-
-            <div id="ai-loading" class="hidden text-center mt-6 p-4">
-                <p class="text-hospital font-bold animate-pulse">サーバーで画像を解析中です... しばらくお待ちください。</p>
-            </div>
-
-            <div id="ai-resultArea" class="hidden mt-6 border-t border-slate-200 pt-6">
-                <h3 class="text-lg font-bold text-center text-slate-800 mb-6">解析結果</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="flex justify-center bg-slate-100 p-4 rounded-xl border border-slate-200">
-                        <img id="resultImage" src="" alt="解析結果画像" class="max-w-full h-auto rounded-lg shadow-sm">
-                    </div>
-
-                    <div class="flex flex-col justify-center gap-4">
-                        <!-- 計測対象の患者ID表示 -->
-                        <div class="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-semibold flex justify-between items-center">
-                            <span>対象患者ID:</span>
-                            <span id="display-patient-id" class="text-teal-300 font-bold tracking-wider">--</span>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-lg border-l-4 border-hospital shadow-sm border border-slate-100">
-                            <p class="text-xs text-slate-500 font-bold">指標 A</p>
-                            <p class="text-xl font-extrabold text-hospital">中指の長さ: <span id="valA">--</span> cm</p>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg border-l-4 border-emerald-500 shadow-sm border border-slate-100">
-                            <p class="text-xs text-slate-500 font-bold">指標 B</p>
-                            <p class="text-xl font-extrabold text-emerald-700">手のひらの長さ: <span id="valB">--</span> cm</p>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg border-l-4 border-amber-500 shadow-sm border border-slate-100">
-                            <p class="text-xs text-slate-500 font-bold">指標 C</p>
-                            <p class="text-xl font-extrabold text-amber-700">手の横幅: <span id="valC">--</span> cm</p>
-                        </div>
-                        
-                        <!-- 病院から自然学校・工大へ共有するボタン -->
-                        <button type="button" onclick="shareAiResult()" class="mt-2 w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm group">
-                            <svg class="w-5 h-5 text-teal-400 group-hover:text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                            患者IDと解析寸法をデータベースに保存・共有
-                        </button>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </section>
-
+      <!-- 拠点切り替えタブ (デモ用) -->
+      <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-200 flex flex-wrap gap-2">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider w-full px-2 mb-1 block">💡 デモ用：ログイン拠点の切り替え</span>
+        <button onclick="switchHub('nature')" id="btn-tab-nature" class="flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 text-slate-600 hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg><span>広島自然学校</span>
+        </button>
+        <button onclick="switchHub('forestry')" id="btn-tab-forestry" class="flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 text-slate-600 hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg><span>大内林業</span>
+        </button>
+        <button onclick="switchHub('hospital')" id="btn-tab-hospital" class="flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-200 shadow-sm bg-hospital text-white">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg><span>北広島病院</span>
+        </button>
       </div>
 
-      <!-- システム構成の確認 (右側：1カラム分) -->
-      <div class="space-y-6">
-        <div class="bg-slate-900 text-white rounded-2xl shadow-xl p-6 border border-slate-800">
-          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center justify-between">
-            <span>⚙️ 接続インフォメーション</span>
-            <span class="bg-brand-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">北広島ネットワーク</span>
-          </h3>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div class="lg:col-span-2 space-y-6">
 
-          <div class="space-y-5">
-            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-4 text-xs">
-              <div class="text-center pb-2 border-b border-slate-800 font-semibold text-slate-300">
-                データの通信ルート (概念)
+          <!-- パターンA: 広島自然学校フォーム -->
+          <section id="panel-nature" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 hidden">
+            <div class="bg-gradient-to-r from-nature to-emerald-500 text-white px-6 py-4 flex justify-between items-center">
+              <div class="flex items-center space-x-2"><span class="text-2xl">🛠️</span><div><h2 class="font-bold text-lg">補助具 制作進捗の登録・更新</h2><p class="text-xs text-emerald-100 opacity-90">広島自然学校専用入力フォーム</p></div></div>
+              <span class="bg-white/20 text-white text-xs px-2.5 py-1 rounded font-semibold tracking-wider">自然学校</span>
+            </div>
+            <form id="form-nature" onsubmit="handleFormSubmit(event, 'nature')" class="p-6 space-y-5">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">1. 対象患者ID <span class="text-red-500">*</span></label>
+                  <input type="text" required id="nature-patient-id" placeholder="例: PT-2026-004" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-nature transition-all">
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">2. 補助具名 <span class="text-red-500">*</span></label>
+                  <input type="text" required id="nature-name" placeholder="例: 食事用スプーン持ち手" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-nature transition-all">
+                </div>
               </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">3. 現在の進捗ステータス <span class="text-red-500">*</span></label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <label class="flex items-center justify-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:bg-emerald-50/50 transition duration-150 border-nature bg-emerald-50 ring-2 ring-emerald-500/20">
+                    <input type="radio" name="nature-status" value="設計中" class="sr-only peer" checked onchange="updateRadioStyles(this)">
+                    <span class="text-xs font-semibold text-emerald-700">1. 設計中</span>
+                  </label>
+                  <label class="flex items-center justify-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:bg-emerald-50/50 transition duration-150">
+                    <input type="radio" name="nature-status" value="試作中" class="sr-only peer" onchange="updateRadioStyles(this)">
+                    <span class="text-xs font-semibold text-slate-500">2. 試作中</span>
+                  </label>
+                  <label class="flex items-center justify-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:bg-emerald-50/50 transition duration-150">
+                    <input type="radio" name="nature-status" value="モニタリング中" class="sr-only peer" onchange="updateRadioStyles(this)">
+                    <span class="text-xs font-semibold text-slate-500">3. モニタリング</span>
+                  </label>
+                  <label class="flex items-center justify-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:bg-emerald-50/50 transition duration-150">
+                    <input type="radio" name="nature-status" value="完成" class="sr-only peer" onchange="updateRadioStyles(this)">
+                    <span class="text-xs font-semibold text-slate-500">4. 完成</span>
+                  </label>
+                </div>
+              </div>
+              <div class="pt-2 flex justify-end">
+                <button type="submit" class="w-full sm:w-auto bg-nature hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition duration-200">進捗データを同期送信する</button>
+              </div>
+            </form>
+          </section>
+
+          <!-- パターンB: 大内林業フォーム -->
+          <section id="panel-forestry" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 hidden">
+            <div class="bg-gradient-to-r from-forestry to-amber-500 text-white px-6 py-4 flex justify-between items-center">
+              <div class="flex items-center space-x-2"><span class="text-2xl">🪵</span><div><h2 class="font-bold text-lg">木材在庫・出荷可能数の報告</h2><p class="text-xs text-amber-100 opacity-90">大内林業専用入力フォーム</p></div></div>
+              <span class="bg-white/20 text-white text-xs px-2.5 py-1 rounded font-semibold tracking-wider">大内林業</span>
+            </div>
+            <form id="form-forestry" onsubmit="handleFormSubmit(event, 'forestry')" class="p-6 space-y-5">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">1. 木材の種類 <span class="text-red-500">*</span></label>
+                  <select id="wood-type" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-forestry transition-all">
+                    <option value="スギ（杉）">スギ（杉）</option><option value="ヒノキ（檜）">ヒノキ（檜）</option><option value="カラマツ（唐松）">カラマツ（唐松）</option>
+                  </select>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                  <label class="block text-xs font-bold text-amber-800 uppercase tracking-wide mb-1.5">保存数 <span class="text-red-500">*</span></label>
+                  <div class="flex items-center space-x-2"><input type="number" required id="wood-inventory" min="0" class="w-full px-3.5 py-2 bg-white border border-slate-300 rounded-lg font-bold text-slate-800 focus:ring-2 focus:ring-forestry transition-all"><span class="text-slate-600 font-semibold">本</span></div>
+                </div>
+                <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
+                  <label class="block text-xs font-bold text-emerald-800 uppercase tracking-wide mb-1.5">即時出荷可能 <span class="text-red-500">*</span></label>
+                  <div class="flex items-center space-x-2"><input type="number" required id="wood-shippable" min="0" class="w-full px-3.5 py-2 bg-white border border-slate-300 rounded-lg font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500 transition-all"><span class="text-slate-600 font-semibold">本</span></div>
+                </div>
+              </div>
+              <div class="pt-2 flex justify-end">
+                <button type="submit" class="w-full sm:w-auto bg-forestry hover:bg-amber-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition duration-200">在庫データを同期送信する</button>
+              </div>
+            </form>
+          </section>
+
+          <!-- パターンC: 北広島病院フォーム -->
+          <section id="panel-hospital" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 block">
+            <div class="bg-gradient-to-r from-hospital to-teal-500 text-white px-6 py-4 flex justify-between items-center">
+              <div class="flex items-center space-x-2"><span class="text-2xl">🏥</span><div><h2 class="font-bold text-lg">データ管理・AI解析ポータル</h2><p class="text-xs text-teal-100 opacity-90">北広島病院・医師・在宅ナース専用</p></div></div>
+              <span class="bg-white/20 text-white text-xs px-2.5 py-1 rounded font-semibold tracking-wider">北広島病院</span>
+            </div>
+            <div class="flex border-b border-slate-200 bg-slate-50">
+              <button type="button" onclick="switchHospitalTab('needs')" id="btn-hosp-needs" class="flex-1 py-3 text-sm font-bold text-hospital border-b-2 border-hospital bg-teal-50/50 transition">📋 補助具ニーズ登録</button>
+              <button type="button" onclick="switchHospitalTab('ai')" id="btn-hosp-ai" class="flex-1 py-3 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-hospital hover:bg-slate-100 transition flex items-center justify-center gap-1.5">🤖 AI画像寸法解析</button>
+            </div>
+
+            <!-- 病院 サブビュー1: ニーズ登録 -->
+            <div id="hospital-view-needs" class="block">
+              <form id="form-hospital" onsubmit="handleFormSubmit(event, 'hospital')" class="p-6 space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">1. 患者管理ID <span class="text-red-500">*</span></label>
+                    <input type="text" required id="patient-id" placeholder="例: PT-2026-004" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-hospital transition-all">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">2. 必要とされる補助具 <span class="text-red-500">*</span></label>
+                    <input type="text" required id="req-tool" placeholder="例: 食事用スプーンの持ち手補助具" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-hospital transition-all">
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">3. 患者様の特徴・具体的な症状 <span class="text-red-500">*</span></label>
+                  <textarea id="patient-symptom" required rows="3" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 focus:ring-2 focus:ring-hospital transition-all"></textarea>
+                </div>
+                <div class="pt-2 flex justify-end">
+                  <button type="submit" class="w-full sm:w-auto bg-hospital hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition duration-200">ニーズを登録・サーバー送信</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- 病院 サブビュー2: AI画像解析 -->
+            <div id="hospital-view-ai" class="hidden p-6 space-y-6">
+              <form id="ai-upload-form" class="flex flex-col items-center gap-4 border-2 border-dashed border-slate-300 p-8 rounded-xl bg-slate-50 w-full">
+                  <div class="w-full max-w-sm mb-2">
+                      <label class="block text-sm font-bold text-slate-700 mb-1.5 text-left flex items-center gap-1">対象患者の管理ID <span class="text-red-500">*</span></label>
+                      <input type="text" required id="ai-patient-id" placeholder="例: PT-2026-004" class="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-hospital transition-all shadow-sm">
+                  </div>
+                  <div class="w-full border-t border-slate-200 my-2"></div>
+                  <input type="file" id="imageInput" accept="image/*" class="block w-full max-w-sm text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-hospital hover:file:bg-teal-100 cursor-pointer">
+                  <button type="submit" class="mt-2 px-8 py-3 bg-hospital text-white font-bold rounded-full hover:bg-teal-700 transition shadow-md">画像をAIで解析する</button>
+              </form>
+              <div id="ai-loading" class="hidden text-center mt-6 p-4">
+                  <p class="text-hospital font-bold animate-pulse">サーバーで画像を解析中です... しばらくお待ちください。</p>
+              </div>
+              <div id="ai-resultArea" class="hidden mt-6 border-t border-slate-200 pt-6">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div class="flex justify-center bg-slate-100 p-4 rounded-xl border border-slate-200">
+                          <img id="resultImage" src="" alt="解析結果画像" class="max-w-full h-auto rounded-lg shadow-sm">
+                      </div>
+                      <div class="flex flex-col justify-center gap-4">
+                          <div class="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-semibold flex justify-between items-center">
+                              <span>対象患者ID:</span><span id="display-patient-id" class="text-teal-300 font-bold tracking-wider">--</span>
+                          </div>
+                          <div class="bg-white p-4 rounded-lg border-l-4 border-hospital shadow-sm border border-slate-100 flex justify-between items-center">
+                              <p class="text-xs text-slate-500 font-bold">指標 A (中指の長さ)</p><p class="text-xl font-extrabold text-hospital"><span id="valA">--</span> cm</p>
+                          </div>
+                          <div class="bg-white p-4 rounded-lg border-l-4 border-emerald-500 shadow-sm border border-slate-100 flex justify-between items-center">
+                              <p class="text-xs text-slate-500 font-bold">指標 B (手のひらの長さ)</p><p class="text-xl font-extrabold text-emerald-700"><span id="valB">--</span> cm</p>
+                          </div>
+                          <button type="button" onclick="shareAiResult()" class="mt-2 w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm">
+                              患者IDと解析寸法をデータベースに保存
+                          </button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-slate-900 text-white rounded-2xl shadow-xl p-6 border border-slate-800">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center justify-between">
+              <span>⚙️ 接続インフォメーション</span><span class="bg-brand-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">北広島ネットワーク</span>
+            </h3>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-4 text-xs">
+              <div class="text-center pb-2 border-b border-slate-800 font-semibold text-slate-300">データの通信ルート (概念)</div>
               <div class="flex flex-col items-center justify-center space-y-3 py-2">
                 <div class="flex items-center justify-around w-full">
                   <span class="px-2 py-1 rounded bg-nature text-white scale-90 opacity-75">自然学校</span>
                   <span class="px-2 py-1 rounded bg-forestry text-white scale-90 opacity-75">大内林業</span>
                 </div>
-                
                 <div class="flex flex-col items-center">
                   <div class="animate-bounce mb-1">⬇️</div>
                   <div class="bg-brand-600 text-white px-4 py-2 rounded-lg font-bold border border-brand-400 shadow shadow-brand-500/50 flex items-center space-x-1.5">
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-300"></span>
-                    </span>
+                    <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-300"></span></span>
                     <span>クラウドサーバー</span>
                   </div>
                   <div class="animate-bounce mt-1">⬆️</div>
                 </div>
-
                 <div class="flex items-center justify-around w-full">
                   <span class="px-2 py-1 rounded bg-hospital text-white scale-90 opacity-75">北広島病院</span>
-                  <span class="px-2 py-1 rounded bg-slate-700 text-white scale-90 opacity-75">広島工業大 (AI)</span>
+                  <span class="px-2 py-1 rounded bg-slate-700 text-white scale-90 opacity-75">工大 (AI)</span>
                 </div>
               </div>
             </div>
-
-            <div class="space-y-3">
-              <div class="flex justify-between text-xs">
-                <span class="text-slate-400">同期プロトコル</span>
-                <span class="font-bold text-slate-200">REST API / Https Secure</span>
-              </div>
-              <div class="flex justify-between text-xs">
-                <span class="text-slate-400">AI解析サーバー</span>
-                <span class="font-bold text-hospital">127.0.0.1:5001 (稼働確認)</span>
-              </div>
-              <div class="flex justify-between text-xs">
-                <span class="text-slate-400">データストレージ</span>
-                <span class="font-bold text-slate-200">サーバー内データベース</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 🔍 モード2: データ照会・数値・ログを見る -->
+    <!-- ========================================== -->
+    <div id="mode-view" class="space-y-8 hidden">
+      
+      <!-- 1. 患者ID検索 (ダッシュボード) -->
+      <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+        <div class="text-center mb-6">
+            <h3 class="text-xl font-bold text-slate-800">🩺 患者データ 統合ダッシュボード</h3>
+            <p class="text-sm text-slate-500 mt-2">患者IDを入力すると、病院と自然学校の「最新の状況と数値」をカード形式で一目で確認できます。</p>
+        </div>
+        <div class="flex gap-2 max-w-2xl mx-auto">
+            <input type="text" id="search-patient-id" placeholder="例: PT-2026-004" class="flex-1 px-4 py-3 bg-slate-50 border border-slate-300 rounded-lg text-slate-800 shadow-inner focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-bold text-lg text-center">
+            <button onclick="executePatientSearch()" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-3 rounded-lg font-bold shadow-md transition duration-200 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg> 検索
+            </button>
+        </div>
+        
+        <!-- 検索結果 (カード型ダッシュボード) -->
+        <div id="patient-search-results" class="hidden mt-8 max-w-5xl mx-auto">
+            <div class="flex items-center justify-between border-b-2 border-slate-200 pb-3 mb-6">
+                <h4 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    患者管理ID: <span id="dash-patient-id" class="text-brand-600 ml-1"></span>
+                </h4>
+                <span class="text-sm font-semibold text-slate-400 bg-slate-100 px-3 py-1 rounded-full">最新データ集計</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 1. ニーズ -->
+                <div class="bg-white border-t-4 border-hospital rounded-xl shadow-md p-5 flex flex-col h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl">🏥</div>
+                    <h5 class="text-sm font-bold text-slate-500 mb-4">オーダー情報 (北広島病院)</h5>
+                    <div class="mb-4"><p class="text-xs text-slate-400 font-bold mb-1">要求される補助具</p><p id="dash-tool" class="text-lg font-bold text-slate-800">--</p></div>
+                    <div><p class="text-xs text-slate-400 font-bold mb-1">患者の症状・メモ</p><p id="dash-symptom" class="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-100 h-24 overflow-y-auto">--</p></div>
+                </div>
+                <!-- 2. AI寸法 -->
+                <div class="bg-slate-800 border-t-4 border-teal-400 rounded-xl shadow-md p-5 flex flex-col h-full relative overflow-hidden text-white">
+                    <div class="absolute top-0 right-0 p-3 opacity-20 text-4xl">🤖</div>
+                    <h5 class="text-sm font-bold text-slate-400 mb-4">最新AI寸法 (工大AIシステム)</h5>
+                    <div class="space-y-4 mt-2">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-2"><span class="text-sm text-slate-300 font-medium">指標 A (中指)</span><span class="text-2xl font-extrabold text-teal-300"><span id="dash-ai-a">--</span><span class="text-sm font-normal text-slate-400 ml-1">cm</span></span></div>
+                        <div class="flex justify-between items-center"><span class="text-sm text-slate-300 font-medium">指標 B (手のひら)</span><span class="text-2xl font-extrabold text-emerald-300"><span id="dash-ai-b">--</span><span class="text-sm font-normal text-slate-400 ml-1">cm</span></span></div>
+                    </div>
+                </div>
+                <!-- 3. 制作進捗 -->
+                <div class="bg-white border-t-4 border-nature rounded-xl shadow-md p-5 flex flex-col h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl">🛠️</div>
+                    <h5 class="text-sm font-bold text-slate-500 mb-4">制作ステータス (自然学校)</h5>
+                    <div class="mb-4"><p class="text-xs text-slate-400 font-bold mb-1">現在の進行状況</p><div id="dash-status-container" class="inline-block px-4 py-2 rounded-lg bg-slate-100 text-slate-700 font-bold text-lg"><span id="dash-status">未着手</span></div></div>
+                    <div class="mt-auto pt-4 border-t border-slate-100"><p class="text-xs text-slate-400 font-bold mb-1">最終更新日</p><p id="dash-update" class="text-sm font-medium text-slate-600">--</p></div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- 2. 全データログ (共有漏れ時のバックアップ・一覧用) -->
+      <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="px-6 py-4 bg-slate-100 border-b border-slate-200 flex justify-between items-center flex-wrap gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">📋</span>
+            <div>
+              <h2 class="font-bold text-slate-800 text-base">すべての通信・データ保存ログ</h2>
+              <p class="text-xs text-slate-500">IDが分からない場合や、全体の動きを追いたい場合はこちらから検索できます</p>
+            </div>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-slate-200 px-3 py-1.5 rounded-lg">
+            全レコード数: <span id="sync-count" class="text-brand-600 font-bold">0</span> 件
+          </div>
+        </div>
+
+        <!-- 🔍 絞り込みフィルター -->
+        <div class="p-4 bg-slate-50 border-b border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          <div class="relative md:col-span-2">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </span>
+            <input type="text" id="filter-search" oninput="applyFilters()" placeholder="キーワードで絞り込み (患者ID、補助具名など)" class="w-full pl-9 pr-4 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all">
+          </div>
+          <div>
+            <select id="filter-hub" onchange="applyFilters()" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium text-slate-700">
+              <option value="all">🏢 すべての発信元拠点</option>
+              <option value="広島自然学校">広島自然学校</option>
+              <option value="大内林業">大内林業</option>
+              <option value="北広島病院">北広島病院</option>
+            </select>
+          </div>
+          <div>
+            <select id="filter-status" onchange="applyFilters()" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium text-slate-700">
+              <option value="all">🟢 すべての同期状態</option>
+              <option value="completed">同期完了 (Server)</option>
+              <option value="processing">同期処理中...</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- テーブルエリア -->
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th class="px-6 py-3.5">送信日時</th>
+                <th class="px-6 py-3.5">発信元拠点</th>
+                <th class="px-6 py-3.5">データ種別</th>
+                <th class="px-6 py-3.5 w-1/2">内容の要約 / 保存データ</th>
+                <th class="px-6 py-3.5">サーバー同期状態</th>
+              </tr>
+            </thead>
+            <tbody id="log-table-body" class="divide-y divide-slate-100 text-sm">
+              <!-- JSで動的に描画されます -->
+            </tbody>
+          </table>
+        </div>
+      </section>
 
     </div>
 
-    <!-- ==================== LOGS & STATUS TABLE & FILTER ==================== -->
-    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mt-6">
-      <div class="px-6 py-4 bg-slate-100 border-b border-slate-200 flex justify-between items-center flex-wrap gap-2">
-        <div class="flex items-center space-x-2">
-          <span class="text-xl">📊</span>
-          <div>
-            <h2 class="font-bold text-slate-800 text-base">データベース閲覧 ＆ サーバー同期ステータス</h2>
-            <p class="text-xs text-slate-500">リアルタイムにサーバーと同期された各拠点のログとデータ一覧です</p>
-          </div>
-        </div>
-        <div class="text-xs font-semibold text-slate-500 bg-slate-200 px-3 py-1.5 rounded-lg">
-          全レコード数: <span id="sync-count" class="text-brand-600 font-bold">4</span> 件
-        </div>
-      </div>
-
-      <!-- 🔍 絞り込みフィルター -->
-      <div class="p-4 bg-slate-50 border-b border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-        <div class="relative md:col-span-2">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          </span>
-          <input type="text" id="filter-search" oninput="applyFilters()" placeholder="キーワードで絞り込み (患者ID、補助具名など)" class="w-full pl-9 pr-4 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all">
-        </div>
-        <div>
-          <select id="filter-hub" onchange="applyFilters()" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all font-medium text-slate-700">
-            <option value="all">🏢 すべての発信元拠点</option>
-            <option value="広島自然学校">広島自然学校</option>
-            <option value="大内林業">大内林業</option>
-            <option value="北広島病院">北広島病院</option>
-            <option value="広島工業大学">広島工業大学</option>
-          </select>
-        </div>
-        <div>
-          <select id="filter-status" onchange="applyFilters()" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all font-medium text-slate-700">
-            <option value="all">🟢 すべての同期状態</option>
-            <option value="completed">同期完了 (Server)</option>
-            <option value="processing">同期処理中...</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="filter-status-bar" class="hidden bg-brand-50 px-6 py-2 border-b border-slate-200 text-xs text-brand-700 font-medium flex justify-between items-center">
-        <div>🔍 フィルター適用中: <span id="filtered-count" class="font-bold">0</span> 件表示中 / 全 <span id="total-count" class="font-bold">0</span> 件中</div>
-        <button onclick="clearFilters()" class="text-brand-600 hover:text-brand-800 underline flex items-center space-x-1"><span>フィルターをすべて解除</span></button>
-      </div>
-
-      <!-- テーブルエリア -->
-      <div class="overflow-x-auto custom-scrollbar">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
-              <th class="px-6 py-3.5">送信日時</th>
-              <th class="px-6 py-3.5">発信元拠点</th>
-              <th class="px-6 py-3.5">データ種別</th>
-              <th class="px-6 py-3.5">内容の要約 / 保存データ</th>
-              <th class="px-6 py-3.5">サーバー同期状態</th>
-            </tr>
-          </thead>
-          <tbody id="log-table-body" class="divide-y divide-slate-100 text-sm">
-            <!-- JavaScript側から動的に描画されます -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-
   </main>
 
-  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
     const initialLogs = [
-      { id: 1, time: '2026/07/02 09:30', hub: '北広島病院', type: '病院ニーズ', summary: 'ID: PT-2026-004 / 持ち手補助具 (右手マヒに対応)', status: 'completed' },
-      { id: 2, time: '2026/07/02 08:15', hub: '大内林業', type: '林業在庫', summary: 'スギ（杉）在庫報告：保存数 150本 / 出荷可能 45本', status: 'completed' },
-      { id: 3, time: '2026/07/01 16:40', hub: '広島自然学校', type: '自然学校進捗', summary: '歩行サポート用ギプスA - 試作品修正・作成中', status: 'completed' },
-      { id: 4, time: '2026/06/30 11:15', hub: '広島工業大学', type: '工大センサーログ', summary: 'motion_data_v1.dat (32.4MB / 動作3D追跡ログ)', status: 'processing' }
+      { id: 1, time: '2026/08/22 17:15', hub: '広島自然学校', type: '進捗報告', summary: '[ID: PT-2026-004] ツール: 食事用スプーン持ち手 / ステータス: 試作中', status: 'completed' },
+      { id: 2, time: '2026/08/21 10:30', hub: '北広島病院', type: 'AI寸法記録', summary: '[ID: PT-2026-004] 指標A: 8.2 / 指標B: 9.5', status: 'completed' },
+      { id: 3, time: '2026/08/20 09:30', hub: '北広島病院', type: 'ニーズ登録', summary: '[ID: PT-2026-004] ツール: 食事用スプーンの持ち手補助具 / 症状: 右手マヒに対応', status: 'completed' },
+      { id: 4, time: '2026/08/19 14:00', hub: '大内林業', type: '在庫報告', summary: 'スギ（杉）在庫報告：保存数 150本 / 出荷可能 45本', status: 'completed' }
     ];
 
     let logs = [...initialLogs];
 
     window.onload = function() {
-      applyFilters(); 
-      switchHub('hospital'); // デモとして最初は病院タブを開いておく
+      switchHub('hospital');
+      applyFilters(); // テーブルの初回描画
     };
 
+    // --- グローバルタブ (入力・照会) の切り替え ---
+    function switchGlobalMode(mode) {
+      const modeEntry = document.getElementById('mode-entry');
+      const modeView = document.getElementById('mode-view');
+      const tabEntry = document.getElementById('tab-global-entry');
+      const tabView = document.getElementById('tab-global-view');
+
+      const activeClass = "flex-1 py-3 text-sm font-bold bg-brand-50 text-brand-700 rounded-lg transition-all flex justify-center items-center gap-2";
+      const inactiveClass = "flex-1 py-3 text-sm font-medium text-slate-500 hover:text-brand-700 hover:bg-slate-50 rounded-lg transition-all flex justify-center items-center gap-2";
+
+      if (mode === 'entry') {
+        modeEntry.classList.remove('hidden');
+        modeView.classList.add('hidden');
+        tabEntry.className = activeClass;
+        tabView.className = inactiveClass;
+      } else {
+        modeEntry.classList.add('hidden');
+        modeView.classList.remove('hidden');
+        tabEntry.className = inactiveClass;
+        tabView.className = activeClass;
+        applyFilters(); // 表示した際にテーブルを再描画
+      }
+    }
+
+    // --- メイン拠点切り替え (入力モード内) ---
+    function switchHub(hubType) {
+      document.getElementById('panel-nature').classList.add('hidden');
+      document.getElementById('panel-forestry').classList.add('hidden');
+      document.getElementById('panel-hospital').classList.add('hidden');
+
+      const btnNature = document.getElementById('btn-tab-nature');
+      const btnForestry = document.getElementById('btn-tab-forestry');
+      const btnHospital = document.getElementById('btn-tab-hospital');
+      const baseClass = "flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 text-slate-600 hover:bg-slate-100";
+      
+      btnNature.className = baseClass;
+      btnForestry.className = baseClass;
+      btnHospital.className = baseClass;
+
+      const userBadge = document.getElementById('current-user-badge');
+
+      if (hubType === 'nature') {
+        document.getElementById('panel-nature').classList.remove('hidden');
+        btnNature.className = baseClass + " font-bold shadow-sm bg-nature text-white hover:bg-nature";
+        userBadge.textContent = '広島自然学校 担当者';
+        userBadge.className = "bg-emerald-100 text-nature px-2.5 py-1 rounded text-xs font-semibold shadow-sm";
+      } else if (hubType === 'forestry') {
+        document.getElementById('panel-forestry').classList.remove('hidden');
+        btnForestry.className = baseClass + " font-bold shadow-sm bg-forestry text-white hover:bg-forestry";
+        userBadge.textContent = '大内林業 担当者';
+        userBadge.className = "bg-amber-100 text-amber-800 px-2.5 py-1 rounded text-xs font-semibold shadow-sm";
+      } else if (hubType === 'hospital') {
+        document.getElementById('panel-hospital').classList.remove('hidden');
+        btnHospital.className = baseClass + " font-bold shadow-sm bg-hospital text-white hover:bg-hospital";
+        userBadge.textContent = '北広島病院 担当者';
+        userBadge.className = "bg-teal-100 text-hospital px-2.5 py-1 rounded text-xs font-semibold shadow-sm";
+      }
+    }
+
+    function switchHospitalTab(tab) {
+        const viewNeeds = document.getElementById('hospital-view-needs');
+        const viewAi = document.getElementById('hospital-view-ai');
+        const btnNeeds = document.getElementById('btn-hosp-needs');
+        const btnAi = document.getElementById('btn-hosp-ai');
+
+        viewNeeds.classList.add('hidden');
+        viewAi.classList.add('hidden');
+        const inactiveClass = "flex-1 py-3 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-hospital hover:bg-slate-100 transition flex items-center justify-center gap-1.5";
+        btnNeeds.className = inactiveClass;
+        btnAi.className = inactiveClass;
+
+        const activeClass = "flex-1 py-3 text-sm font-bold text-hospital border-b-2 border-hospital bg-teal-50/50 transition flex items-center justify-center gap-1.5";
+
+        if(tab === 'needs') {
+            viewNeeds.classList.remove('hidden');
+            btnNeeds.className = activeClass;
+        } else if(tab === 'ai') {
+            viewAi.classList.remove('hidden');
+            btnAi.className = activeClass;
+        }
+    }
+
+    // --- テーブルのフィルター＆描画 ---
     function applyFilters() {
       const searchText = document.getElementById('filter-search').value.toLowerCase().trim();
       const selectedHub = document.getElementById('filter-hub').value;
@@ -557,21 +508,18 @@
     function renderFilteredLogs(displayLogs) {
       const tbody = document.getElementById('log-table-body');
       tbody.innerHTML = '';
-
       displayLogs.forEach(log => {
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-50/80 transition-colors';
-
         let hubBadgeClass = 'bg-slate-100 text-slate-700';
         if (log.hub === '広島自然学校') hubBadgeClass = 'bg-emerald-50 text-nature border border-emerald-200';
         if (log.hub === '大内林業') hubBadgeClass = 'bg-amber-50 text-amber-800 border border-amber-200';
         if (log.hub === '北広島病院') hubBadgeClass = 'bg-teal-50 text-hospital border border-teal-200';
-        if (log.hub === '広島工業大学') hubBadgeClass = 'bg-indigo-50 text-indigo-700 border border-indigo-200';
-
+        
         let statusBadge = log.status === 'completed' 
           ? `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800"><span class="w-1.5 h-1.5 mr-1.5 bg-emerald-500 rounded-full"></span>同期完了</span>`
           : `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 animate-pulse"><span class="w-1.5 h-1.5 mr-1.5 bg-amber-500 rounded-full"></span>処理中...</span>`;
-
+        
         tr.innerHTML = `
           <td class="px-6 py-4 whitespace-nowrap text-xs text-slate-500 font-medium">${log.time}</td>
           <td class="px-6 py-4 whitespace-nowrap"><span class="px-2.5 py-1 rounded text-xs font-bold ${hubBadgeClass}">${log.hub}</span></td>
@@ -581,184 +529,166 @@
         `;
         tbody.appendChild(tr);
       });
-
       document.getElementById('sync-count').textContent = logs.length;
     }
 
-    // 拠点(メインタブ)切り替え
-    function switchHub(hubType) {
-      document.getElementById('panel-nature').classList.add('hidden');
-      document.getElementById('panel-forestry').classList.add('hidden');
-      document.getElementById('panel-hospital').classList.add('hidden');
+    // --- 🔍 患者データ横断照会 (ダッシュボード数値描画) ---
+    function executePatientSearch() {
+        const pid = document.getElementById('search-patient-id').value.trim();
+        const resultsContainer = document.getElementById('patient-search-results');
+        
+        if(!pid) { alert("検索する患者管理IDを入力してください。"); return; }
+        
+        const pLogs = logs.filter(l => l.summary.includes(`[ID: ${pid}]`));
+        
+        if(pLogs.length === 0) {
+            alert(`患者ID「${pid}」のデータは見つかりませんでした。\n（下部のログテーブルからキーワードで探してみてください）`);
+            resultsContainer.classList.add('hidden');
+            return;
+        }
+        
+        resultsContainer.classList.remove('hidden');
+        document.getElementById('dash-patient-id').textContent = pid;
 
-      const btnNature = document.getElementById('btn-tab-nature');
-      const btnForestry = document.getElementById('btn-tab-forestry');
-      const btnHospital = document.getElementById('btn-tab-hospital');
+        let tool = "未登録", symptom = "未登録", status = "未着手", updateTime = "--", aiA = "--", aiB = "--";
+        let statusColorClass = "bg-slate-100 text-slate-700";
 
-      btnNature.className = "flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 text-slate-600 hover:bg-slate-100";
-      btnForestry.className = "flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 text-slate-600 hover:bg-slate-100";
-      btnHospital.className = "flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 text-slate-600 hover:bg-slate-100";
+        const needsLog = pLogs.find(l => l.type === 'ニーズ登録');
+        if(needsLog) {
+            const parts = needsLog.summary.split(' / ');
+            parts.forEach(p => {
+                if(p.includes('ツール:')) tool = p.split('ツール: ')[1];
+                if(p.includes('症状:')) symptom = p.split('症状: ')[1];
+            });
+        }
 
-      const userBadge = document.getElementById('current-user-badge');
+        const aiLog = pLogs.find(l => l.type === 'AI寸法記録');
+        if(aiLog) {
+            const parts = aiLog.summary.split(' / ');
+            parts.forEach(p => {
+                if(p.includes('指標A:')) aiA = p.split('指標A: ')[1];
+                if(p.includes('指標B:')) aiB = p.split('指標B: ')[1];
+            });
+        }
 
-      if (hubType === 'nature') {
-        document.getElementById('panel-nature').classList.remove('hidden');
-        btnNature.className = "flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-200 shadow-sm bg-nature text-white";
-        userBadge.textContent = '広島自然学校 担当者';
-        userBadge.className = "bg-emerald-100 text-nature px-2.5 py-1 rounded text-xs font-semibold shadow-sm";
-      } else if (hubType === 'forestry') {
-        document.getElementById('panel-forestry').classList.remove('hidden');
-        btnForestry.className = "flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-200 shadow-sm bg-forestry text-white";
-        userBadge.textContent = '大内林業 担当者';
-        userBadge.className = "bg-amber-100 text-amber-800 px-2.5 py-1 rounded text-xs font-semibold shadow-sm";
-      } else if (hubType === 'hospital') {
-        document.getElementById('panel-hospital').classList.remove('hidden');
-        btnHospital.className = "flex-1 min-w-[150px] flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-bold text-sm transition-all duration-200 shadow-sm bg-hospital text-white";
-        userBadge.textContent = '北広島病院 担当者';
-        userBadge.className = "bg-teal-100 text-hospital px-2.5 py-1 rounded text-xs font-semibold shadow-sm";
+        const progressLog = pLogs.find(l => l.type === '進捗報告');
+        if(progressLog) {
+            const parts = progressLog.summary.split(' / ');
+            parts.forEach(p => {
+                if(p.includes('ステータス:')) status = p.split('ステータス: ')[1];
+            });
+            updateTime = progressLog.time;
+            
+            if(status === '設計中') statusColorClass = "bg-blue-100 text-blue-800";
+            if(status === '試作中') statusColorClass = "bg-amber-100 text-amber-800";
+            if(status === 'モニタリング中') statusColorClass = "bg-purple-100 text-purple-800";
+            if(status === '完成') statusColorClass = "bg-emerald-100 text-emerald-800";
+        }
+
+        document.getElementById('dash-tool').textContent = tool;
+        document.getElementById('dash-symptom').textContent = symptom;
+        document.getElementById('dash-ai-a').textContent = aiA;
+        document.getElementById('dash-ai-b').textContent = aiB;
+        document.getElementById('dash-status').textContent = status;
+        document.getElementById('dash-status-container').className = `inline-block px-4 py-2 rounded-lg font-bold text-lg ${statusColorClass}`;
+        document.getElementById('dash-update').textContent = updateTime;
+    }
+
+    function updateRadioStyles(radio) {
+      document.querySelectorAll('input[name="nature-status"]').forEach(r => {
+        const l = r.parentElement;
+        l.classList.remove('border-nature', 'bg-emerald-50', 'ring-2', 'ring-emerald-500/20');
+        l.querySelector('span').classList.remove('text-emerald-700');
+        l.querySelector('span').classList.add('text-slate-500');
+      });
+      if (radio.checked) {
+        radio.parentElement.classList.add('border-nature', 'bg-emerald-50', 'ring-2', 'ring-emerald-500/20');
+        radio.parentElement.querySelector('span').classList.add('text-emerald-700');
+        radio.parentElement.querySelector('span').classList.remove('text-slate-500');
       }
     }
 
-    // 病院内のサブタブ切り替え
-    function switchHospitalTab(tab) {
-        const viewNeeds = document.getElementById('hospital-view-needs');
-        const viewAi = document.getElementById('hospital-view-ai');
-        const btnNeeds = document.getElementById('btn-hosp-needs');
-        const btnAi = document.getElementById('btn-hosp-ai');
-
-        if(tab === 'needs') {
-            viewNeeds.classList.remove('hidden');
-            viewAi.classList.add('hidden');
-            btnNeeds.className = "flex-1 py-3 text-sm font-bold text-hospital border-b-2 border-hospital bg-teal-50/50 transition";
-            btnAi.className = "flex-1 py-3 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-hospital hover:bg-slate-100 transition flex items-center justify-center gap-1.5";
-        } else {
-            viewNeeds.classList.add('hidden');
-            viewAi.classList.remove('hidden');
-            btnAi.className = "flex-1 py-3 text-sm font-bold text-hospital border-b-2 border-hospital bg-teal-50/50 transition flex items-center justify-center gap-1.5";
-            btnNeeds.className = "flex-1 py-3 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-hospital hover:bg-slate-100 transition";
-        }
-    }
-
-    // ==== ここから組み込んだ index.html (AI) のロジック ====
-    let lastAiData = null;       // AIの解析結果を一時保存
-    let currentAiPatientId = ""; // 解析対象の患者IDを一時保存
-    
+    // --- AI解析ダミーロジック ---
+    let lastAiData = null;
+    let currentAiPatientId = "";
     document.getElementById('ai-upload-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        // 1. 患者IDの取得と保持
         const patientIdInput = document.getElementById('ai-patient-id').value;
-        if (!patientIdInput) {
-            alert('患者管理IDを入力してください。'); return;
-        }
+        if (!patientIdInput) { alert('患者管理IDを入力してください。'); return; }
         currentAiPatientId = patientIdInput;
-
-        // 2. 画像の取得
         const fileInput = document.getElementById('imageInput');
-        if (fileInput.files.length === 0) {
-            alert('画像を選択してください！'); return;
-        }
-
-        const formData = new FormData();
-        formData.append('file', fileInput.files[0]);
-
+        if (fileInput.files.length === 0) { alert('画像を選択してください！'); return; }
+        
         document.getElementById('ai-loading').classList.remove('hidden');
         document.getElementById('ai-resultArea').classList.add('hidden');
 
-        try {
-            // Flask サーバーへのリクエスト送信 (app.py)
-            const response = await fetch('http://127.0.0.1:5001/analyze', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await response.json();
-
-            if (!response.ok || data.error) throw new Error(data.error);
-
-            // 画面に数値を反映
-            document.getElementById('display-patient-id').innerText = currentAiPatientId; // 患者IDを結果画面に表示
-            document.getElementById('valA').innerText = data.A_area_cm2;
-            document.getElementById('valB').innerText = data.B_width_cm;
-            document.getElementById('valC').innerText = data.C_grip_cm;
-            document.getElementById('resultImage').src = data.processed_image_base64;
-
-            lastAiData = data; // 共有用に保存
-
+        setTimeout(() => {
+            document.getElementById('display-patient-id').innerText = currentAiPatientId;
+            document.getElementById('valA').innerText = "8.5";
+            document.getElementById('valB').innerText = "9.2";
+            lastAiData = { A_area_cm2: "8.5", B_width_cm: "9.2" };
             document.getElementById('ai-loading').classList.add('hidden');
             document.getElementById('ai-resultArea').classList.remove('hidden');
-
-        } catch (error) {
-            alert('通信に失敗しました。Flaskサーバー(http://127.0.0.1:5001)が起動しているか確認してください。');
-            document.getElementById('ai-loading').classList.add('hidden');
-        }
+        }, 1500);
     });
 
-    // 病院スタッフがAI解析結果と患者IDを紐付けてシステム（自然学校等）に保存・共有する関数
     function shareAiResult() {
       if(!lastAiData || !currentAiPatientId) return;
       const now = new Date();
       const timeStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
       
-      // ログのサマリー文に患者IDを含める
-      const summaryStr = `[ID: ${currentAiPatientId}] AI寸法解析完了: 指標A(${lastAiData.A_area_cm2}cm) 指標B(${lastAiData.B_width_cm}cm) 指標C(${lastAiData.C_grip_cm}cm)`;
+      const summaryStr = `[ID: ${currentAiPatientId}] 指標A: ${lastAiData.A_area_cm2} / 指標B: ${lastAiData.B_width_cm}`;
+      addLogAndNotify(timeStr, '北広島病院', 'AI寸法記録', summaryStr);
+      showToast(`🚀 患者ID: ${currentAiPatientId} の寸法データを保存しました`, 'success');
       
-      // ログに追加（発信元は「北広島病院」として追加される）
-      addLogAndNotify(timeStr, '北広島病院', 'AI寸法記録 (保存済)', summaryStr);
-      showToast(`🚀 患者ID: ${currentAiPatientId} の寸法データをデータベースに保存しました`, 'success');
+      const searchInput = document.getElementById('search-patient-id').value.trim();
+      if(searchInput === currentAiPatientId) executePatientSearch();
     }
-    // =========================================================
 
-    // 共通のログ追加 ＆ トースト関数
+    // --- データ送信 ---
     function handleFormSubmit(event, type) {
       event.preventDefault();
       const now = new Date();
       const timeStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-      
       let hubName, dataType, summary;
       
       if (type === 'nature') { 
-        hubName = '広島自然学校'; 
-        dataType = '進捗報告'; 
-        // 自然学校フォームの患者IDと補助具名を取得
-        const ptId = document.getElementById('nature-patient-id').value;
-        const name = document.getElementById('nature-name').value;
+        hubName = '広島自然学校'; dataType = '進捗報告'; 
+        const pid = document.getElementById('nature-patient-id').value;
+        const tool = document.getElementById('nature-name').value;
         const status = document.querySelector('input[name="nature-status"]:checked').value;
-        summary = `[ID: ${ptId}] ${name} - 進捗ステータス: [${status}]`; 
+        summary = `[ID: ${pid}] ツール: ${tool} / ステータス: ${status}`; 
       }
       else if (type === 'forestry') { 
-        hubName = '大内林業'; 
-        dataType = '在庫報告'; 
-        const woodType = document.getElementById('wood-type').value;
-        const inventory = document.getElementById('wood-inventory').value;
-        const shippable = document.getElementById('wood-shippable').value;
-        summary = `${woodType} 在庫報告：保存数 ${inventory}本 / 出荷可能 ${shippable}本`; 
+        hubName = '大内林業'; dataType = '在庫報告'; 
+        summary = `${document.getElementById('wood-type').value} 在庫報告：保存数 ${document.getElementById('wood-inventory').value}本 / 出荷可能 ${document.getElementById('wood-shippable').value}本`; 
       }
       else if (type === 'hospital') { 
-        hubName = '北広島病院'; 
-        dataType = 'ニーズ登録'; 
-        summary = `ID: ${document.getElementById('patient-id').value} / ${document.getElementById('req-tool').value}`; 
+        hubName = '北広島病院'; dataType = 'ニーズ登録'; 
+        const pid = document.getElementById('patient-id').value;
+        const tool = document.getElementById('req-tool').value;
+        const symptom = document.getElementById('patient-symptom').value;
+        summary = `[ID: ${pid}] ツール: ${tool} / 症状: ${symptom}`; 
       }
 
       addLogAndNotify(timeStr, hubName, dataType, summary);
-      
-      // フォームの入力内容をリセット
       event.target.reset();
       
-      // 自然学校の場合、ファイル名の表示もリセットする
-      if (type === 'nature') {
-        document.getElementById('file-name-nature').classList.add('hidden');
-      }
+      const searchInput = document.getElementById('search-patient-id').value.trim();
+      if(searchInput && summary.includes(`[ID: ${searchInput}]`)) executePatientSearch();
     }
 
     function addLogAndNotify(timeStr, hubName, dataType, summaryStr) {
       const newLog = { id: Date.now(), time: timeStr, hub: hubName, type: dataType, summary: summaryStr, status: 'processing' };
       logs.unshift(newLog);
+      
+      // 新しいデータが入ったら即座にテーブルも更新する
       applyFilters();
-      showToast('🚀 サーバーへデータを送信中...', 'info');
 
-      setTimeout(() => {
-        newLog.status = 'completed';
-        applyFilters();
+      showToast('🚀 サーバーへデータを送信中...', 'info');
+      setTimeout(() => { 
+        newLog.status = 'completed'; 
+        applyFilters(); 
       }, 2500);
     }
 
@@ -774,7 +704,6 @@
           icon.textContent = '🔄';
           t.className = "fixed bottom-5 right-5 z-50 bg-slate-900 text-amber-400 px-5 py-3 rounded-lg shadow-xl flex items-center space-x-2 border border-amber-500/30 transition-all duration-300";
       }
-
       t.classList.remove('hidden');
       setTimeout(() => t.classList.add('hidden'), 3000);
     }
@@ -782,7 +711,8 @@
     function resetSystem() {
       if(confirm('送信履歴をリセットして、最初の状態に戻しますか？')) {
         logs = [...initialLogs];
-        applyFilters();
+        applyFilters(); // リセット時もテーブルを更新
+        document.getElementById('patient-search-results').classList.add('hidden');
         showToast('🔄 システムの表示データを初期化しました', 'success');
       }
     }
